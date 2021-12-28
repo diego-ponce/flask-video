@@ -1,5 +1,7 @@
 # flask video - a video player website
 
+Inspired by https://roytuts.com/upload-and-play-video-using-flask/
+
 ## Quickstart
 
 ```
@@ -19,3 +21,4 @@ pip install -r requirements.txt
 python app.py
 
 ```
+
