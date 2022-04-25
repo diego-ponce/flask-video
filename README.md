@@ -18,10 +18,13 @@ python3.9 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
 # run the webserver
-python app.py
+python main.py
 
 ```
 Select a date and submit - if there is a video for that date it will be displayed. If there are multiple videos for that date, a new `<div>` will be created for each video dynamically.
+
+- control videos with the buttons
+- arrow keys skip forward and backward, spacebar toggles pause/play
 
 ## Notes
 
