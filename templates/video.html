@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Python Flask - Play Video by Date Example</title>
-</head>
-<body>
-    <h2>Select a date to play videos on that date</h2>
-    <p>
-    {% with messages = get_flashed_messages() %}  
+    <head>
+        <meta charset="UTF-8">
+        <title>Python Flask - Play Video by Date Example</title>
+    </head>
+    <body>
+        <h2>Select a date to play videos on that date</h2>
+        <p>
+        {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
             {% for message in messages %}
@@ -15,26 +15,65 @@
             {% endfor %}
         </ul>
         {% endif %}
-    {% endwith %}
-    </p>
-    <form method="post" action="/" enctype="multipart/form-data">
-        <dl>
-            <p>
-            <input type="date" id="date" name="date" autocomplete="off" required>
-            </p>
-        </dl>
-        <p>
-        <input type="submit" value="Update">
+        {% endwith %}
         </p>
-    </form>
-    {% if date_files %}
-        {% for filename in date_files %}
-            <div style="margin: 10px auto; float: left">
-                <video autoplay="autoplay" controls="controls" preload="preload">
-                    <source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
-                </video>
+        <form method="post" action="/" enctype="multipart/form-data">
+            <dl>
+                <p>
+                <input type="date" id="date" name="date" autocomplete="off" required>
+                </p>
+            </dl>
+            <p>
+            <input type="submit" value="Update">
+            </p>
+            <div>
+                <button onclick="updateAllVideos(playPause)">Play/Pause</button>
+                <button onclick="updateAllVideos(restart);">Restart</button>
+                <button onclick="skip(-10)">Rewind</button>
+                <button onclick="skip(10)">Fastforward</button>
             </div>
+        </form>
+        {% if date_files %}
+        {% for filename in date_files %}
+        <div style="margin: 10px auto; float: left">
+            <video autoplay="autoplay" controls="controls" preload="preload">
+                <source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
+            </video>
+        </div>
         {% endfor %}
-    {% endif %} 
-</body>
+        {% endif %}
+        <script>
+            //controls for video.js HTML5 video player
+            var myVideos = document.getElementsByTagName('video');
+            const listArray = Array.from(myVideos);
+
+            function updateAllVideos(func) {
+                            listArray.forEach((item) => func(item)});
+                        }
+            function playPause(myVideo) {
+                            if (myVideo.paused)
+                                myVideo.play();
+                            else
+                                myVideo.pause();
+                        }
+            function forward(myVideo) { skip(5, myVideo); }
+            function backward(myVideo) { skip(-5, myVideo); }
+            function skip(time, myVideo) { myVideo.currentTime=myVideo.currentTime+time; }
+            function restart(myVideo) { myVideo.currentTime = 0; }
+
+            document.addEventListener("keydown",(e)=>{
+                            if(e.keyCode==37){       //left arrow
+                                        updateAllVideos(backward)
+                                        }
+                            else if(e.keyCode==39){ //right arrow
+                                        updateAllVideos(forward)
+                                        }
+                            else if(e.keyCode==32){ //spacebar
+                                        updateAllVideos(playPause)
+                                        }
+
+                        }
+                        )
+        </script>
+    </body>
 </html>
