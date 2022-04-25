@@ -17,26 +17,24 @@
         {% endif %}
     {% endwith %}
     </p>
-    <!-- TODO handle multiple files -->
-    {% if date_files %}
-
-        {% for filename in date_files %}
-    <div style="margin: 10px auto;">
-		<video autoplay="autoplay" controls="controls" preload="preload">
-			<source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
-		</video>
-	</div>
-        {% endfor %}
-    {% endif %} 
     <form method="post" action="/" enctype="multipart/form-data">
         <dl>
             <p>
-                <input type="date" id="date" name="date" autocomplete="off" required>
+            <input type="date" id="date" name="date" autocomplete="off" required>
             </p>
         </dl>
         <p>
-            <input type="submit" value="Update">
+        <input type="submit" value="Update">
         </p>
     </form>
+    {% if date_files %}
+        {% for filename in date_files %}
+            <div style="margin: 10px auto; float: left">
+                <video autoplay="autoplay" controls="controls" preload="preload">
+                    <source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
+                </video>
+            </div>
+        {% endfor %}
+    {% endif %} 
 </body>
 </html>
