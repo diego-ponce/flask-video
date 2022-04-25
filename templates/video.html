@@ -29,8 +29,8 @@
             <div>
                 <button onclick="updateAllVideos(playPause)">Play/Pause</button>
                 <button onclick="updateAllVideos(restart);">Restart</button>
-                <button onclick="skip(-10)">Rewind</button>
-                <button onclick="skip(10)">Fastforward</button>
+                <button onclick="updateAllVideos(backward)">Rewind</button>
+                <button onclick="updateAllVideos(forward)">Fastforward</button>
             </div>
         </form>
         {% if date_files %}
@@ -48,7 +48,7 @@
             const listArray = Array.from(myVideos);
 
             function updateAllVideos(func) {
-                            listArray.forEach((item) => func(item)});
+                            listArray.forEach((item) => {func(item)});
                         }
             function playPause(myVideo) {
                             if (myVideo.paused)
